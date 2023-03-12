@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Андрей</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  
+    <table id="myTable"></table>
+    <button onclick="foo()">Добавить число</button>
+  
+  <script>
+    let numbers = [];
+    for (let i = 0; i < 30; i++) {
+    numbers[i] = Math.floor(Math.random() * 100);
+}
+
+//Создаем таблицу и добавляем её
+let table = document.getElementById('myTable');
+
+//Таблица 5*6
+for (let i = 0; i < 5; i++) {
+  let row = document.createElement('tr');
+
+  for (let j = 0; j < 6; j++) {
+    let cell = document.createElement('td');
+
+    //Если число соответсвует значению 50 и больше, покрасить ячейку таблицы в оранжевый цвет
+    if (numbers[(i * 6) + j] > 50) {
+      cell.style.backgroundColor = 'orange';
+    }
+
+    //добавляем число в каждую ячейку
+    cell.innerHTML = numbers[(i * 6) + j];
+
+    //Добавялем ячейки в строку
+    row.appendChild(cell);
+  }
+
+  //добавляем строки в таблицу
+  table.appendChild(row);
+}
+
+let array = [];
+let currentIndex = 0;
+
+function foo() {
+  let randomNumber = Math.floor(Math.random() * 100);
+  array[currentIndex] = randomNumber; // записываем случайное число в текущий индекс массива
+
+  let rowIndex = Math.floor(currentIndex / 6);
+  let cellIndex = currentIndex % 6;
+
+  if (cellIndex === 0) { // если это первая ячейка в строке, то создаем новую строку
+    let newRow = document.createElement('tr');
+    table.appendChild(newRow);
+  }
+
+  let newRow = table.lastChild; // получаем последнюю строку таблицы
+  let cell = document.createElement('td');
+
+  //Если число соответсвует значению 50 и больше, покрасить ячейку таблицы в оранжевый цвет
+  if (randomNumber > 50) {
+    cell.style.backgroundColor = 'orange';
+  }
+
+  //добавляем число в ячейку
+  cell.innerHTML = randomNumber;
+
+  //Добавялем ячейки в строку
+  newRow.appendChild(cell);
+
+  currentIndex++;
+
+  if (currentIndex === 30) {
+    currentIndex = 0;
+    array = [];
+    for (let i = 0; i < 30; i++) {
+      array[i] = Math.floor(Math.random() * 100);
+      let rowIndex = Math.floor(i / 6);
+      let cellIndex = i % 6;
+      let cell = table.rows[rowIndex].cells[cellIndex];
+      cell.innerHTML = array[i];
+      if (array[i] >= 50) {
+        cell.style.backgroundColor = 'orange';
+      } else {
+        cell.style.backgroundColor = '';
+      }
+    }
+  }
+}
+  </script>
+
+
+</body>
+
+</html>
